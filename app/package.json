@@ -12,9 +12,9 @@
     "pretest": "NODE_ENV=test sequelize db:migrate:undo && NODE_ENV=test npm run migrate",
     "test": "jest --ci",
     "prestart": "NODE_ENV=production npm run migrate",
-    "start": "NODE_ENV=production fastify start -a 0.0.0.0 -p 8080 -l info app.js",
+    "start": "NODE_ENV=production fastify start -a 0.0.0.0 -p 3000 -l info app.js",
     "predev": "npm run migrate",
-    "dev": "fastify start -a 0.0.0.0 -p 8080 -w -l info -P app.js"
+    "dev": "fastify start -a 0.0.0.0 -p 3000 -w -l info -P app.js"
   },
   "repository": {
     "type": "git",
