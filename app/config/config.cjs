@@ -19,7 +19,7 @@ module.exports = {
     //   },
     // },
   },
-  development: {
+  test: {
     dialect: 'sqlite',
     storage: './database.sqlite',
   },
