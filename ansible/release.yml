@@ -1,0 +1,44 @@
+---
+
+- hosts: all
+  gather_facts: no
+  tasks:
+
+    - community.docker.docker_network:
+        name: js-fastify-blog
+
+    - community.docker.docker_container:
+        name: app
+        # Обязатлеьно указываем тег, который хотим деплоить
+        # Если образа на сервере нет, Ansible его автоматически скачает
+        image: "netwarloq/js-fastify-blog:{{ version }}"
+        # Подключаем супервизор
+        # Если контейнер остановится, например, из-за ошибок
+        # супервизор докера его перезапустить
+        restart_policy: always
+        # Запускаем если не запущен
+        state: started
+        networks:
+          - name: js-fastify-blog
+        # Делаем доступным снаружи
+        ports:
+          - 3000:3000
+        env: # Настраиваем
+          NODE_ENV: production
+          SERVER_MESSAGE: "Hexlet Awesome Server!!! This is server {{ ansible_host }}"
+          DATABASE_NAME: '{{ db_name }}'
+          DATABASE_USERNAME: '{{ db_user }}'
+          DATABASE_PASSWORD: '{{ db_password }}'
+          DATABASE_PORT: '{{ db_port }}'
+          DATABASE_HOST: '{{ db_host }}'
+
+    - community.docker.docker_container:
+        name: caddy
+        image: "netwarloq/devops-example-caddy:{{ version }}"
+        restart_policy: always
+        state: started
+        networks:
+          - name: js-fastify-blog
+        ports:
+          - 80:80
+          - 443:443
