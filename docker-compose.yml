@@ -4,19 +4,5 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.production
-    image: netwarloq/devops-for-programmers-project-74:latest
+    image: netwarloq/js-fastify-blog:latest
     command: bash -c 'sleep 5 && npm test'
-    environment:
-      DATABASE_NAME: postgres
-      DATABASE_USERNAME: postgres
-      DATABASE_PASSWORD: password
-      DATABASE_PORT: 5432
-      DATABASE_HOST: db
-    depends_on:
-      - db
-
-  db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
